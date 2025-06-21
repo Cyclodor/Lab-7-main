@@ -1,6 +1,6 @@
 package com.example.studentapi.dao;
 
-import com.example.studentapi.model.Group;
+import com.example.studentapi.model.ClassGroup;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
@@ -17,10 +17,10 @@ public class ScheduleDAO {
         this.restTemplate = new RestTemplate();
     }
 
-    public List<Group> getStudentGroups() {
+    public List<ClassGroup> getStudentGroups() {
         String url = "https://iis.bsuir.by/api/v1/student-groups";
         try {
-            Group[] groups = restTemplate.getForObject(url, Group[].class);
+            ClassGroup[] groups = restTemplate.getForObject(url, ClassGroup[].class);
             return Arrays.asList(groups);
         } catch (HttpClientErrorException e) {
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package com.example.studentapi.controller;
 
-import com.example.studentapi.model.Group;
-import com.example.studentapi.service.GroupService;
+import com.example.studentapi.model.ClassGroup;
+import com.example.studentapi.service.ClassGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,29 +10,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/groups")
-public class GroupController {
+public class ClassGroupController {
     @Autowired
-    private GroupService groupService;
+    private ClassGroupService groupService;
 
     @GetMapping
-    public List<Group> getAllGroups() {
+    public List<ClassGroup> getAllGroups() {
         return groupService.getAllGroups();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> getGroupById(@PathVariable Long id) {
+    public ResponseEntity<ClassGroup> getGroupById(@PathVariable Long id) {
         return groupService.getGroupById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Group createGroup(@RequestBody Group group) {
+    public ClassGroup createGroup(@RequestBody ClassGroup group) {
         return groupService.saveGroup(group);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Group> updateGroup(@PathVariable Long id, @RequestBody Group group) {
+    public ResponseEntity<ClassGroup> updateGroup(@PathVariable Long id, @RequestBody ClassGroup group) {
         return groupService.getGroupById(id)
                 .map(existingGroup -> {
                     group.setId(id);

@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "student_groups")
-public class Group {
+public class ClassGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,5 +19,5 @@ public class Group {
     private String faculty;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<Student> students;
+    private List<Learner> students;
 }

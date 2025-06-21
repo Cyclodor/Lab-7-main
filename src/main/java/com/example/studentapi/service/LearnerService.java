@@ -1,7 +1,7 @@
 package com.example.studentapi.service;
 
-import com.example.studentapi.model.Student;
-import com.example.studentapi.repository.StudentRepository;
+import com.example.studentapi.model.Learner;
+import com.example.studentapi.repository.LearnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,19 +9,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudentService {
+public class LearnerService {
     @Autowired
-    private StudentRepository studentRepository;
+    private LearnerRepository studentRepository;
 
-    public List<Student> getAllStudents() {
+    public List<Learner> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(Long id) {
+    public Optional<Learner> getStudentById(Long id) {
         return studentRepository.findById(id);
     }
 
-    public Student saveStudent(Student student) {
+    public Learner saveStudent(Learner student) {
         return studentRepository.save(student);
     }
 

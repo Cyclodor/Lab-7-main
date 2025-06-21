@@ -1,6 +1,6 @@
 package com.example.studentapi.controller;
 
-import com.example.studentapi.model.Group;
+import com.example.studentapi.model.ClassGroup;
 import com.example.studentapi.service.ScheduleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/student-groups")
-    public List<Group> getStudentGroups() {
+    public List<ClassGroup> getStudentGroups() {
         return scheduleService.getStudentGroups();
     }
 }

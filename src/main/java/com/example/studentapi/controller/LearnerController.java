@@ -1,7 +1,7 @@
 package com.example.studentapi.controller;
 
-import com.example.studentapi.model.Student;
-import com.example.studentapi.service.StudentService;
+import com.example.studentapi.model.Learner;
+import com.example.studentapi.service.LearnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,29 +10,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
-public class StudentController {
+public class LearnerController {
     @Autowired
-    private StudentService studentService;
+    private LearnerService studentService;
 
     @GetMapping
-    public List<Student> getAllStudents() {
+    public List<Learner> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
+    public ResponseEntity<Learner> getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
+    public Learner createStudent(@RequestBody Learner student) {
         return studentService.saveStudent(student);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+    public ResponseEntity<Learner> updateStudent(@PathVariable Long id, @RequestBody Learner student) {
         return studentService.getStudentById(id)
                 .map(existingStudent -> {
                     student.setId(id);

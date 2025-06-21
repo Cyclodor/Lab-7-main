@@ -10,3 +10,5 @@ README для лабораторной работы
   service/ScheduleService.java - Сервисный класс для обработки логики.
   controller/ScheduleController.java - Контроллер для обработки запросов.
   StudentApiApplication.java - Основной класс приложения.
+
+Добавлены функции и объекты для работы с базами данных (PostgreSQL) релизованная методом один ко многим

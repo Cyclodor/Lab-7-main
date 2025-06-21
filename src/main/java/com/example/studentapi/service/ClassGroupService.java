@@ -1,7 +1,7 @@
 package com.example.studentapi.service;
 
-import com.example.studentapi.model.Group;
-import com.example.studentapi.repository.GroupRepository;
+import com.example.studentapi.model.ClassGroup;
+import com.example.studentapi.repository.ClassGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,19 +9,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GroupService {
+public class ClassGroupService {
     @Autowired
-    private GroupRepository groupRepository;
+    private ClassGroupRepository groupRepository;
 
-    public List<Group> getAllGroups() {
+    public List<ClassGroup> getAllGroups() {
         return groupRepository.findAll();
     }
 
-    public Optional<Group> getGroupById(Long id) {
+    public Optional<ClassGroup> getGroupById(Long id) {
         return groupRepository.findById(id);
     }
 
-    public Group saveGroup(Group group) {
+    public ClassGroup saveGroup(ClassGroup group) {
         return groupRepository.save(group);
     }
 
