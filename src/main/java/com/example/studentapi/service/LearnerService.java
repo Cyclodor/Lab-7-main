@@ -11,21 +11,21 @@ import java.util.Optional;
 @Service
 public class LearnerService {
     @Autowired
-    private LearnerRepository studentRepository;
+    private LearnerRepository learnerRepository;
 
-    public List<Learner> getAllStudents() {
-        return studentRepository.findAll();
+    public List<Learner> getAllLearners() {
+        return learnerRepository.findAll();
     }
 
-    public Optional<Learner> getStudentById(Long id) {
-        return studentRepository.findById(id);
+    public Optional<Learner> getLearnerById(Long id) {
+        return learnerRepository.findById(id);
     }
 
-    public Learner saveStudent(Learner student) {
-        return studentRepository.save(student);
+    public Learner saveLearner(Learner learner) {
+        return learnerRepository.save(learner);
     }
 
-    public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
+    public void deleteLearner(Long id) {
+        learnerRepository.deleteById(id);
     }
 } 

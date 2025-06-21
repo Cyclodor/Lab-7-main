@@ -5,25 +5,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "students")
+@Table(name = "learners")
 public class Learner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String fullName;
 
     @Column(nullable = false)
-    private String firstName;
+    private String givenName;
 
     @Column(nullable = false)
-    private String lastName;
+    private String familyName;
 
     @Column(nullable = false)
-    private String studentNumber;
+    private String enrollmentNumber;
 
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
-    private ClassGroup group;
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 } 

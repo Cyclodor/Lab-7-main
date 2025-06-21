@@ -9,43 +9,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/learners")
 public class LearnerController {
     @Autowired
-    private LearnerService studentService;
+    private LearnerService learnerService;
 
     @GetMapping
-    public List<Learner> getAllStudents() {
-        return studentService.getAllStudents();
+    public List<Learner> getAllLearners() {
+        return learnerService.getAllLearners();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Learner> getStudentById(@PathVariable Long id) {
-        return studentService.getStudentById(id)
+    public ResponseEntity<Learner> getLearnerById(@PathVariable Long id) {
+        return learnerService.getLearnerById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Learner createStudent(@RequestBody Learner student) {
-        return studentService.saveStudent(student);
+    public Learner createLearner(@RequestBody Learner learner) {
+        return learnerService.saveLearner(learner);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Learner> updateStudent(@PathVariable Long id, @RequestBody Learner student) {
-        return studentService.getStudentById(id)
-                .map(existingStudent -> {
-                    student.setId(id);
-                    return ResponseEntity.ok(studentService.saveStudent(student));
+    public ResponseEntity<Learner> updateLearner(@PathVariable Long id, @RequestBody Learner learner) {
+        return learnerService.getLearnerById(id)
+                .map(existingLearner -> {
+                    learner.setId(id);
+                    return ResponseEntity.ok(learnerService.saveLearner(learner));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
-        return studentService.getStudentById(id)
-                .map(student -> {
-                    studentService.deleteStudent(id);
+    public ResponseEntity<Void> deleteLearner(@PathVariable Long id) {
+        return learnerService.getLearnerById(id)
+                .map(learner -> {
+                    learnerService.deleteLearner(id);
                     return ResponseEntity.ok().<Void>build();
                 })
                 .orElse(ResponseEntity.notFound().build());

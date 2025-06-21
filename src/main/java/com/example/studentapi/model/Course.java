@@ -6,18 +6,18 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "student_groups")
-public class ClassGroup {
+@Table(name = "courses")
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String courseName;
 
     @Column(nullable = false)
-    private String faculty;
+    private String department;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<Learner> students;
-}
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Learner> learners;
+} 
