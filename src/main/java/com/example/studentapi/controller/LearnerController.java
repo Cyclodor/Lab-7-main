@@ -50,4 +50,10 @@ public class LearnerController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/by-department")
+    public ResponseEntity<List<Learner>> getLearnersByCourseDepartment(@RequestParam String department) {
+        List<Learner> learners = learnerService.getLearnersByCourseDepartment(department);
+        return ResponseEntity.ok(learners);
+    }
 } 

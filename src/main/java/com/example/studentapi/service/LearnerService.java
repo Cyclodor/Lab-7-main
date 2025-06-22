@@ -12,6 +12,9 @@ import java.util.Optional;
 public class LearnerService {
     @Autowired
     private LearnerRepository learnerRepository;
+    
+    @Autowired
+    private CacheService cacheService;
 
     public List<Learner> getAllLearners() {
         return learnerRepository.findAll();
@@ -27,5 +30,20 @@ public class LearnerService {
 
     public void deleteLearner(Long id) {
         learnerRepository.deleteById(id);
+    }
+
+    public List<Learner> getLearnersByCourseDepartment(String department) {
+        String cacheKey = "learners_by_department_" + department;
+        
+        // Проверяем кэш
+        if (cacheService.containsKey(cacheKey)) {
+            return (List<Learner>) cacheService.get(cacheKey);
+        }
+        
+        // Если нет в кэше, получаем из БД и кэшируем
+        List<Learner> learners = learnerRepository.findLearnersByCourseDepartment(department);
+        cacheService.put(cacheKey, learners);
+        
+        return learners;
     }
 } 

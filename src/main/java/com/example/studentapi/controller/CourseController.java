@@ -50,4 +50,10 @@ public class CourseController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Course>> getCoursesByNameContaining(@RequestParam String courseName) {
+        List<Course> courses = courseService.getCoursesByNameContaining(courseName);
+        return ResponseEntity.ok(courses);
+    }
 } 
