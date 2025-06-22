@@ -18,19 +18,25 @@ public class CacheController {
     @GetMapping("/info")
     public ResponseEntity<Map<String, Object>> getCacheInfo() {
         Map<String, Object> info = new HashMap<>();
-        info.put("size", cacheService.size());
+        int size = cacheService.size();
+        info.put("size", size);
+        System.out.println("=== CACHE CONTROLLER ===");
+        System.out.println("Cache info requested. Current size: " + size);
+        System.out.println("Returning: " + info);
         return ResponseEntity.ok(info);
     }
     
     @DeleteMapping("/clear")
     public ResponseEntity<String> clearCache() {
         cacheService.clear();
+        System.out.println("Cache cleared successfully");
         return ResponseEntity.ok("Cache cleared successfully");
     }
     
     @DeleteMapping("/{key}")
     public ResponseEntity<String> removeFromCache(@PathVariable String key) {
         cacheService.remove(key);
+        System.out.println("Key '" + key + "' removed from cache");
         return ResponseEntity.ok("Key '" + key + "' removed from cache");
     }
 } 

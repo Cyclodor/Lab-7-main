@@ -35,12 +35,10 @@ public class CourseService {
     public List<Course> getCoursesByNameContaining(String courseName) {
         String cacheKey = "courses_by_name_" + courseName;
         
-        // Проверяем кэш
         if (cacheService.containsKey(cacheKey)) {
             return (List<Course>) cacheService.get(cacheKey);
         }
         
-        // Если нет в кэше, получаем из БД и кэшируем
         List<Course> courses = courseRepository.findCoursesByNameContaining(courseName);
         cacheService.put(cacheKey, courses);
         
