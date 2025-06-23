@@ -2,6 +2,8 @@ package com.example.studentapi.service;
 
 import com.example.studentapi.model.Learner;
 import com.example.studentapi.repository.LearnerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public class LearnerService {
     
     @Autowired
     private CacheService cacheService;
+
+    private static final Logger logger = LoggerFactory.getLogger(LearnerService.class);
 
     public List<Learner> getAllLearners() {
         return learnerRepository.findAll();
@@ -35,26 +39,26 @@ public class LearnerService {
     public List<Learner> getLearnersByCourseDepartment(String department) {
         String cacheKey = "learners_by_department_" + department;
         
-        System.out.println("=== LEARNER SERVICE ===");
-        System.out.println("Searching learners by department: " + department);
-        System.out.println("Cache key: " + cacheKey);
+        logger.info("=== LEARNER SERVICE ===");
+        logger.info("Searching learners by department: {}", department);
+        logger.info("Cache key: {}", cacheKey);
         
         if (cacheService.containsKey(cacheKey)) {
-            System.out.println("✅ Data found in cache for key: " + cacheKey);
+            logger.info("\u2705 Data found in cache for key: {}", cacheKey);
             List<Learner> cachedData = (List<Learner>) cacheService.get(cacheKey);
-            System.out.println("Returning " + (cachedData != null ? cachedData.size() : 0) + " learners from cache");
+            logger.info("Returning {} learners from cache", (cachedData != null ? cachedData.size() : 0));
             return cachedData;
         }
         
-        System.out.println("❌ Data not in cache, fetching from database...");
+        logger.info("\u274c Data not in cache, fetching from database...");
         List<Learner> learners = learnerRepository.findLearnersByCourseDepartment(department);
-        System.out.println("Found " + (learners != null ? learners.size() : 0) + " learners in database");
+        logger.info("Found {} learners in database", (learners != null ? learners.size() : 0));
         
         if (learners != null && !learners.isEmpty()) {
             cacheService.put(cacheKey, learners);
-            System.out.println("✅ Data cached with key: " + cacheKey);
+            logger.info("\u2705 Data cached with key: {}", cacheKey);
         } else {
-            System.out.println("⚠️ No data to cache (empty result)");
+            logger.info("\u26a0\ufe0f No data to cache (empty result)");
         }
         
         return learners;

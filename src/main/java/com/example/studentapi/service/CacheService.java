@@ -1,5 +1,7 @@
 package com.example.studentapi.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -10,39 +12,41 @@ public class CacheService {
     
     private final Map<String, Object> cache = new ConcurrentHashMap<>();
     
+    private static final Logger logger = LoggerFactory.getLogger(CacheService.class);
+    
     public void put(String key, Object value) {
         cache.put(key, value);
-        System.out.println("CACHE PUT: key='" + key + "', value size=" + (value != null ? "not null" : "null"));
-        System.out.println("CACHE SIZE AFTER PUT: " + cache.size());
+        logger.info("CACHE PUT: key='{}', value size={}", key, (value != null ? "not null" : "null"));
+        logger.info("CACHE SIZE AFTER PUT: {}", cache.size());
     }
     
     public Object get(String key) {
         Object value = cache.get(key);
-        System.out.println("CACHE GET: key='" + key + "', found=" + (value != null));
+        logger.info("CACHE GET: key='{}', found={}", key, (value != null));
         return value;
     }
     
     public boolean containsKey(String key) {
         boolean contains = cache.containsKey(key);
-        System.out.println("CACHE CONTAINS: key='" + key + "', result=" + contains);
+        logger.info("CACHE CONTAINS: key='{}', result={}", key, contains);
         return contains;
     }
     
     public void remove(String key) {
         cache.remove(key);
-        System.out.println("CACHE REMOVE: key='" + key + "'");
-        System.out.println("CACHE SIZE AFTER REMOVE: " + cache.size());
+        logger.info("CACHE REMOVE: key='{}'", key);
+        logger.info("CACHE SIZE AFTER REMOVE: {}", cache.size());
     }
     
     public void clear() {
         int sizeBefore = cache.size();
         cache.clear();
-        System.out.println("CACHE CLEAR: size before=" + sizeBefore + ", after=" + cache.size());
+        logger.info("CACHE CLEAR: size before={}, after={}", sizeBefore, cache.size());
     }
     
     public int size() {
         int size = cache.size();
-        System.out.println("CACHE SIZE: " + size);
+        logger.info("CACHE SIZE: {}", size);
         return size;
     }
 } 
