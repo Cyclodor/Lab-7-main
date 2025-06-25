@@ -85,3 +85,54 @@
 - **CheckStyle** - проверка стиля кода
 - **PostgreSQL** - работа с реляционной базой данных
 - **Lombok** - уменьшение boilerplate кода
+
+### Bulk-операции (массовое создание)
+
+Добавлены POST-методы для массового создания Learner и Course с использованием Java 8 Stream API и лямбда-выражений:
+
+- **POST** `/api/learners/bulk` — массовое создание студентов
+- **POST** `/api/courses/bulk` — массовое создание курсов
+
+**Пример запроса для /api/learners/bulk:**
+```json
+[
+  {
+    "fullName": "Ivan Ivanov",
+    "givenName": "Ivan",
+    "familyName": "Ivanov",
+    "enrollmentNumber": "12345",
+    "course": { "id": 1 }
+  },
+  {
+    "fullName": "Petr Petrov",
+    "givenName": "Petr",
+    "familyName": "Petrov",
+    "enrollmentNumber": "67890",
+    "course": { "id": 1 }
+  }
+]
+```
+
+**Пример запроса для /api/courses/bulk:**
+```json
+[
+  {
+    "courseName": "Math",
+    "department": "Science"
+  },
+  {
+    "courseName": "Physics",
+    "department": "Science"
+  }
+]
+```
+
+### Покрытие unit-тестами
+
+- Бизнес-логика сервисов покрыта unit-тестами на >80% (см. тесты в `src/test/java/com/example/studentapi/service/`).
+- Для bulk-операций реализованы отдельные тесты, проверяющие работу с коллекциями, пустыми и null-значениями.
+- Для тестирования используется Mockito и JUnit 5.
+
+### Использование Stream API и лямбда-выражений
+
+- В сервисах для bulk-операций используется Java 8 Stream API и лямбда-выражения для обработки списков сущностей.
