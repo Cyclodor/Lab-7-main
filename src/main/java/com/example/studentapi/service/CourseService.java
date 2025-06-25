@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -43,5 +44,11 @@ public class CourseService {
         cacheService.put(cacheKey, courses);
         
         return courses;
+    }
+
+    public List<Course> saveCourses(List<Course> courses) {
+        return courses == null ? List.of() : courses.stream()
+                .map(courseRepository::save)
+                .collect(Collectors.toList());
     }
 } 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LearnerService {
@@ -62,5 +63,11 @@ public class LearnerService {
         }
         
         return learners;
+    }
+
+    public List<Learner> saveLearners(List<Learner> learners) {
+        return learners == null ? List.of() : learners.stream()
+                .map(learnerRepository::save)
+                .collect(Collectors.toList());
     }
 } 

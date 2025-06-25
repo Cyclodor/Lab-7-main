@@ -2,6 +2,8 @@ package com.example.studentapi.controller;
 
 import com.example.studentapi.model.Learner;
 import com.example.studentapi.service.LearnerService;
+import com.example.studentapi.model.Course;
+import com.example.studentapi.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import java.util.List;
 public class LearnerController {
     @Autowired
     private LearnerService learnerService;
+
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping
     public List<Learner> getAllLearners() {
@@ -27,8 +32,23 @@ public class LearnerController {
     }
 
     @PostMapping
-    public Learner createLearner(@RequestBody Learner learner) {
-        return learnerService.saveLearner(learner);
+    public ResponseEntity<?> createLearner(@RequestBody Learner learner) {
+        if (learner.getCourse() == null || learner.getCourse().getId() == null ||
+            courseService.getCourseById(learner.getCourse().getId()).isEmpty()) {
+            return ResponseEntity.badRequest().body("Course with given id does not exist");
+        }
+        return ResponseEntity.ok(learnerService.saveLearner(learner));
+    }
+
+    @PostMapping("/bulk")
+    public ResponseEntity<?> createLearnersBulk(@RequestBody List<Learner> learners) {
+        for (Learner learner : learners) {
+            if (learner.getCourse() == null || learner.getCourse().getId() == null ||
+                courseService.getCourseById(learner.getCourse().getId()).isEmpty()) {
+                return ResponseEntity.badRequest().body("Course with given id does not exist for one or more learners");
+            }
+        }
+        return ResponseEntity.ok(learnerService.saveLearners(learners));
     }
 
     @PutMapping("/{id}")

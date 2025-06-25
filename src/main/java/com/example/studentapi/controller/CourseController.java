@@ -31,6 +31,11 @@ public class CourseController {
         return courseService.saveCourse(course);
     }
 
+    @PostMapping("/bulk")
+    public List<Course> createCoursesBulk(@RequestBody List<Course> courses) {
+        return courseService.saveCourses(courses);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course course) {
         return courseService.getCourseById(id)
