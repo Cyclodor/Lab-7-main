@@ -1,6 +1,7 @@
 package com.example.studentapi.controller;
 
 import com.example.studentapi.service.CacheService;
+import com.example.studentapi.service.RequestCounterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class CacheController {
     
     @Autowired
     private CacheService cacheService;
+    
+    @Autowired
+    private RequestCounterService requestCounterService;
     
     private static final Logger logger = LoggerFactory.getLogger(CacheController.class);
     
@@ -42,5 +46,15 @@ public class CacheController {
         cacheService.remove(key);
         logger.info("Key '{}' removed from cache", key);
         return ResponseEntity.ok("Key '" + key + "' removed from cache");
+    }
+    
+    @GetMapping("/requests-count")
+    public ResponseEntity<Map<String, Object>> getRequestsCount() {
+        Map<String, Object> info = new HashMap<>();
+        int count = requestCounterService.getCount();
+        info.put("requestsCount", count);
+        logger.info("=== CACHE CONTROLLER ===");
+        logger.info("Requests count requested. Current count: {}", count);
+        return ResponseEntity.ok(info);
     }
 } 
