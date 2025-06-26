@@ -37,31 +37,29 @@ public class LearnerService {
         learnerRepository.deleteById(id);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Learner> getLearnersByCourseDepartment(String department) {
         String cacheKey = "learners_by_department_" + department;
-        
         logger.info("=== LEARNER SERVICE ===");
         logger.info("Searching learners by department: {}", department);
         logger.info("Cache key: {}", cacheKey);
-        
         if (cacheService.containsKey(cacheKey)) {
             logger.info("\u2705 Data found in cache for key: {}", cacheKey);
-            List<Learner> cachedData = (List<Learner>) cacheService.get(cacheKey);
-            logger.info("Returning {} learners from cache", (cachedData != null ? cachedData.size() : 0));
-            return cachedData;
+            Object cachedData = cacheService.get(cacheKey);
+            if (cachedData instanceof List<?>) {
+                return (List<Learner>) cachedData;
+            }
+            return List.of();
         }
-        
         logger.info("\u274c Data not in cache, fetching from database...");
         List<Learner> learners = learnerRepository.findLearnersByCourseDepartment(department);
         logger.info("Found {} learners in database", (learners != null ? learners.size() : 0));
-        
         if (learners != null && !learners.isEmpty()) {
             cacheService.put(cacheKey, learners);
             logger.info("\u2705 Data cached with key: {}", cacheKey);
         } else {
             logger.info("\u26a0\ufe0f No data to cache (empty result)");
         }
-        
         return learners;
     }
 

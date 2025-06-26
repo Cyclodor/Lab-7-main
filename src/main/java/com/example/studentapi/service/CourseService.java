@@ -33,16 +33,18 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Course> getCoursesByNameContaining(String courseName) {
         String cacheKey = "courses_by_name_" + courseName;
-        
         if (cacheService.containsKey(cacheKey)) {
-            return (List<Course>) cacheService.get(cacheKey);
+            Object cached = cacheService.get(cacheKey);
+            if (cached instanceof List<?>) {
+                return (List<Course>) cached;
+            }
+            return List.of();
         }
-        
         List<Course> courses = courseRepository.findCoursesByNameContaining(courseName);
         cacheService.put(cacheKey, courses);
-        
         return courses;
     }
 

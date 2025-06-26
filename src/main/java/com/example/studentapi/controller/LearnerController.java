@@ -2,7 +2,6 @@ package com.example.studentapi.controller;
 
 import com.example.studentapi.model.Learner;
 import com.example.studentapi.service.LearnerService;
-import com.example.studentapi.model.Course;
 import com.example.studentapi.service.CourseService;
 import com.example.studentapi.service.RequestCounterService;
 import org.springframework.beans.factory.annotation.Autowired;
